@@ -1,3 +1,4 @@
+//Vijay Challa, Ronnie Jebara
 
 public class Space {
 	private Piece occupying;

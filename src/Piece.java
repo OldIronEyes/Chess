@@ -1,3 +1,5 @@
+//Vijay Challa, Ronnie Jebara
+
 import java.util.ArrayList;
 
 public abstract class Piece {
@@ -18,7 +20,7 @@ public abstract class Piece {
 	public Boolean getIsWhite() {
 		return isWhite;
 	}
-	
+
 	public void setIsWhite(Boolean isWhite) {
 		this.isWhite = isWhite;
 	}
@@ -28,7 +30,11 @@ public abstract class Piece {
 	}
 
 	public void setName(char name) {
-		this.name = name;
+		if(this.isWhite) {
+			this.name = Character.toUpperCase(name);
+		} else {
+			this.name = Character.toLowerCase(name);
+		}
 	}
-	
+
 }

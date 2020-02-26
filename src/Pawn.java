@@ -1,7 +1,8 @@
+//Vijay Challa, Ronnie Jebara
+//Finished, need testing
 import java.util.ArrayList;
 
 public class Pawn extends Piece{
-	//Needed for initial 2 space move
 	Boolean hasMoved;
 	
 	public Boolean getHasMoved() {
@@ -23,20 +24,56 @@ public class Pawn extends Piece{
 		this.hasMoved = false;
 	}
 
-	//Moves forward one square at a time, except on the first move where it can move 2 squares
-	//Able to capture one space ahead on diagonals
 	public ArrayList<int[]> getMoveset(Board board) {
-		return null;
+		ArrayList<int[]> moveset = new ArrayList<int[]>();
+		int[] temp = this.getLocation();
+		int direction;
 		
+		if(this.getIsWhite()) {
+			direction = -1;
+		} else {
+			direction = 1;
+		}
+		
+		//Normal movement and first move double
+		if(board.spaces[temp[0]+direction][temp[1]].getOccupying() == null) {
+			moveset.add(board.spaces[temp[0]+direction][temp[1]].getLocation());
+			if(board.spaces[temp[0]+2*direction][temp[1]].getOccupying() == null && !this.hasMoved) {
+				moveset.add(board.spaces[temp[0]+direction+direction][temp[1]].getLocation());
+			}
+		}
+
+		//Diagonal capturing
+		if(board.spaces[temp[0]+direction][temp[1]-1].getOccupying() != null && 
+		   board.spaces[temp[0]+direction][temp[1]-1].getOccupying().getIsWhite() != this.getIsWhite()) {
+			moveset.add(board.spaces[temp[0]+direction][temp[1]-1].getLocation());
+		}
+		if(board.spaces[temp[0]+direction][temp[1]-1].getOccupying() != null && 
+		   board.spaces[temp[0]+direction][temp[1]-1].getOccupying().getIsWhite() != this.getIsWhite()) {
+			moveset.add(board.spaces[temp[0]+direction][temp[1]+1].getLocation());
+		}
+		
+		if(board.getEnPassant()) {
+			this.enPassant(board, moveset);
+		}
+		
+		return moveset;
 	}
 	
-	
-
-	//If the previous player moved a pawn 2 spaces, and the current player has a pawn that
-	//could have captured the opponent's if it had only moved 1 space, then the current player
-	//can move their pawn diagonally and capture the pawn that moved.
-	public void enPassant(int[] target) {
-		
+	private void enPassant(Board board, ArrayList<int[]> moveset) {
+		int[] temp = this.getLocation();
+		if(this.getIsWhite() && temp[0] == 3) {
+			if(temp[1]-1 > -1) {
+				if(board.spaces[temp[0]][temp[1]-1].getOccupying().getIsWhite() != this.getIsWhite() && Character.toLowerCase(board.spaces[temp[0]][temp[1]-1].getOccupying().getName()) == 'p') {
+					moveset.add(board.spaces[temp[0]][temp[1]-1].getLocation());
+				}
+			}
+			if(temp[1]+1 < 8) {
+				if(board.spaces[temp[0]][temp[1]+1].getOccupying().getIsWhite() != this.getIsWhite() && Character.toLowerCase(board.spaces[temp[0]][temp[1]+1].getOccupying().getName()) == 'p') {
+					moveset.add(board.spaces[temp[0]][temp[1]+1].getLocation());
+				}
+			}
+		}
 	}
 
 }

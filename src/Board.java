@@ -1,11 +1,63 @@
+//Vijay Challa, Ronnie Jebara
 
 public class Board {
 	Space[][] spaces;
-	Boolean whiteToMove;
-	Boolean whiteInCheck;
-	Boolean blackInCheck;
-	
-	//Board is built starting from the top left, moving right then down
+	private Boolean whiteToMove;
+	private Boolean whiteInCheck;
+	private Boolean blackInCheck;
+	private Boolean whiteCanCastle;
+	private Boolean blackCanCastle;
+	private Boolean enPassant;
+
+
+	public Boolean getWhiteToMove() {
+		return whiteToMove;
+	}
+
+	public void setWhiteToMove(Boolean whiteToMove) {
+		this.whiteToMove = whiteToMove;
+	}
+
+	public Boolean getWhiteInCheck() {
+		return whiteInCheck;
+	}
+
+	public void setWhiteInCheck(Boolean whiteInCheck) {
+		this.whiteInCheck = whiteInCheck;
+	}
+
+	public Boolean getBlackInCheck() {
+		return blackInCheck;
+	}
+
+	public void setBlackInCheck(Boolean blackInCheck) {
+		this.blackInCheck = blackInCheck;
+	}
+
+	public Boolean getWhiteCanCastle() {
+		return whiteCanCastle;
+	}
+
+	public void setWhiteCanCastle(Boolean whiteCanCastle) {
+		this.whiteCanCastle = whiteCanCastle;
+	}
+
+	public Boolean getBlackCanCastle() {
+		return blackCanCastle;
+	}
+
+	public void setBlackCanCastle(Boolean blackCanCastle) {
+		this.blackCanCastle = blackCanCastle;
+	}
+
+	public Boolean getEnPassant() {
+		return enPassant;
+	}
+
+	public void setEnPassant(Boolean enPassant) {
+		this.enPassant = enPassant;
+	}
+
 	public Board() {
 		this.spaces = new Space[8][8];
 		int[] location = new int[2];
@@ -24,10 +76,17 @@ public class Board {
 		this.whiteToMove = true;
 		this.whiteInCheck = false;
 		this.blackInCheck = false;
+		this.whiteCanCastle = true;
+		this.blackCanCastle = true;
+		this.enPassant = false;
 	}
 
-	//Adds all the pieces to the board in starting positions with black on top, white on bottom
+	public Board(Board board) {
+		
+	}
+	
 	public void populateBoard() {
+		
 		spaces[0][0].setOccupying(new Rook(false, spaces[0][0].getLocation()));
 		spaces[0][1].setOccupying(new Knight(false, spaces[0][1].getLocation()));
 		spaces[0][2].setOccupying(new Bishop(false, spaces[0][2].getLocation()));
