@@ -12,66 +12,63 @@ public class GameMaster {
 		this.model = new Board();
 	}
 	
-	//Can change to accommodate any type of chess notation for input
-	//Starting assumption is "Piece location, target location"
-	//For Example: "A2 A3", moving a pawn 1 space forward
 	public ArrayList<int[]> parseMove(String input){
 		ArrayList<int[]> move = new ArrayList<int[]>();
 		int[] piece = new int[2];
 		int[] target = new int[2];
 		
-		if(input.charAt(0) == 'A') {
+		if(input.charAt(0) == 'a') {
 			piece[0] = 0;
 		}
-		if(input.charAt(0) == 'B') {
+		if(input.charAt(0) == 'b') {
 			piece[0] = 1;
 		}
-		if(input.charAt(0) == 'C') {
+		if(input.charAt(0) == 'c') {
 			piece[0] = 2;
 		}
-		if(input.charAt(0) == 'D') {
+		if(input.charAt(0) == 'd') {
 			piece[0] = 3;
 		}
-		if(input.charAt(0) == 'E') {
+		if(input.charAt(0) == 'e') {
 			piece[0] = 4;
 		}
-		if(input.charAt(0) == 'F') {
+		if(input.charAt(0) == 'f') {
 			piece[0] = 5;
 		}
-		if(input.charAt(0) == 'G') {
+		if(input.charAt(0) == 'g') {
 			piece[0] = 6;
 		}
-		if(input.charAt(0) == 'H') {
+		if(input.charAt(0) == 'h') {
 			piece[0] = 7;
 		}
-		piece[1] = Character.getNumericValue(input.charAt(1));
+		piece[1] = (8 - Character.getNumericValue(input.charAt(1)));
 		move.add(piece);
 		
-		if(input.charAt(3) == 'A') {
+		if(input.charAt(3) == 'a') {
 			target[0] = 0;
 		}
-		if(input.charAt(3) == 'B') {
+		if(input.charAt(3) == 'b') {
 			target[0] = 1;
 		}
-		if(input.charAt(3) == 'C') {
+		if(input.charAt(3) == 'c') {
 			target[0] = 2;
 		}
-		if(input.charAt(3) == 'D') {
+		if(input.charAt(3) == 'd') {
 			target[0] = 3;
 		}
-		if(input.charAt(3) == 'E') {
+		if(input.charAt(3) == 'e') {
 			target[0] = 4;
 		}
-		if(input.charAt(3) == 'F') {
+		if(input.charAt(3) == 'f') {
 			target[0] = 5;
 		}
-		if(input.charAt(3) == 'G') {
+		if(input.charAt(3) == 'g') {
 			target[0] = 6;
 		}
-		if(input.charAt(3) == 'H') {
+		if(input.charAt(3) == 'h') {
 			target[0] = 7;
 		}
-		target[1] = Character.getNumericValue(input.charAt(4));
+		target[1] = (8 - Character.getNumericValue(input.charAt(4)));
 		move.add(target);
 		
 		return move;

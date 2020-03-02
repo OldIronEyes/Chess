@@ -7,11 +7,7 @@ public class Knight extends Piece{
 	public Knight(Boolean IsWhite, int[] Location) {
 		this.setIsWhite(IsWhite);
 		this.setLocation(Location);
-		if(this.getIsWhite()) {
-			this.setName('N');
-		} else {
-			this.setName('n');
-		}
+		this.setName('N');
 	}
 
 	public ArrayList<int[]> getMoveset(Board board) {

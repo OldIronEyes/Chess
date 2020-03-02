@@ -30,11 +30,7 @@ public abstract class Piece {
 	}
 
 	public void setName(char name) {
-		if(this.isWhite) {
-			this.name = Character.toUpperCase(name);
-		} else {
-			this.name = Character.toLowerCase(name);
-		}
+		this.name = name;
 	}
 
 }

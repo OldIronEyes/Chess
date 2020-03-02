@@ -12,15 +12,25 @@ public class Space {
 	}
 	
 	public void display() {
-		char filler;
+		char filler1;
+		char filler2;
 		
 		if(this.occupying != null) {
-			filler = occupying.getName();
+			if(this.occupying.getIsWhite()) {
+				filler1 = 'w';
+			} else {
+				filler1 = 'b';
+			}
+			
+			filler2 = this.occupying.getName();
 		} else {
-			filler = this.color;
+			filler1 = this.color;
+			filler2 = this.color;
 		}
 		
-		System.out.print("[" + filler + "]");
+		System.out.print(filler1);
+		System.out.print(filler2);
+		System.out.print(' ');
 	}
 
 	public int[] getLocation() {

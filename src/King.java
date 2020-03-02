@@ -16,11 +16,7 @@ public class King extends Piece {
 	public King(Boolean IsWhite, int[] Location) {
 		this.setIsWhite(IsWhite);
 		this.setLocation(Location);
-		if(this.getIsWhite()) {
-			this.setName('K');
-		} else {
-			this.setName('k');
-		}
+		this.setName('K');
 		this.hasMoved = false;
 	}
 

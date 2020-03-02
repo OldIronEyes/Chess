@@ -1,4 +1,5 @@
 //Vijay Challa, Ronnie Jebara
+//Finished, need testing
 
 public class Board {
 	Space[][] spaces;
@@ -68,7 +69,7 @@ public class Board {
 				if((i+j) % 2 == 0) {
 					spaces[i][j] = new Space(null, location, ' ');
 				} else {
-					spaces[i][j] = new Space(null, location, '*');
+					spaces[i][j] = new Space(null, location, '#');
 				}
 			}
 		}
@@ -116,8 +117,10 @@ public class Board {
 			for(int j = 0; j < 8; j++) {
 				spaces[i][j].display();
 			}
+			System.out.print((8 - i));
 			System.out.print('\n');
 		}
+		System.out.println(" a  b  c  d  e  f  g  h");
 	}
 
 }

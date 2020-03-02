@@ -7,11 +7,7 @@ public class Queen extends Piece{
 	public Queen(Boolean IsWhite, int[] Location) {
 		this.setIsWhite(IsWhite);
 		this.setLocation(Location);
-		if(this.getIsWhite()) {
-			this.setName('Q');
-		} else {
-			this.setName('q');
-		}
+		this.setName('Q');
 	}
 
 	public ArrayList<int[]> getMoveset(Board board) {

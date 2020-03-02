@@ -7,11 +7,7 @@ public class Bishop extends Piece{
 	public Bishop(Boolean IsWhite, int[] Location) {
 		this.setIsWhite(IsWhite);
 		this.setLocation(Location);
-		if(this.getIsWhite()) {
-			this.setName('B');
-		} else {
-			this.setName('b');
-		}
+		this.setName('b');
 	}
 
 	public ArrayList<int[]> getMoveset(Board board) {
