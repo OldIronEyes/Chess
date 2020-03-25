@@ -1,191 +1,67 @@
 //Vijay Challa, Ronnie Jebara
-//Finished, need testing
 
 import java.util.ArrayList;
 
 public class GameMaster {
 	Board mainBoard;
 	Board model;
+	Board test;
 	
 	public GameMaster() {
 		this.mainBoard = new Board();
 		this.model = new Board();
+		this.mainBoard.populateBoard();
+		this.model.populateBoard();
+		
+		this.test = new Board();
+	}
+
+	public Boolean takeTurn(String input) {
+		
+		return false;
 	}
 	
 	public ArrayList<int[]> parseMove(String input){
 		ArrayList<int[]> move = new ArrayList<int[]>();
-		int[] piece = new int[2];
-		int[] target = new int[2];
+		String[] tokens = input.split(" ");
 		
-		if(input.charAt(0) == 'a') {
-			piece[0] = 0;
+		for(int i = 0; i < tokens.length; i++) {
+			move.add(parseHelper(tokens[i]));
 		}
-		if(input.charAt(0) == 'b') {
-			piece[0] = 1;
-		}
-		if(input.charAt(0) == 'c') {
-			piece[0] = 2;
-		}
-		if(input.charAt(0) == 'd') {
-			piece[0] = 3;
-		}
-		if(input.charAt(0) == 'e') {
-			piece[0] = 4;
-		}
-		if(input.charAt(0) == 'f') {
-			piece[0] = 5;
-		}
-		if(input.charAt(0) == 'g') {
-			piece[0] = 6;
-		}
-		if(input.charAt(0) == 'h') {
-			piece[0] = 7;
-		}
-		piece[1] = (8 - Character.getNumericValue(input.charAt(1)));
-		move.add(piece);
-		
-		if(input.charAt(3) == 'a') {
-			target[0] = 0;
-		}
-		if(input.charAt(3) == 'b') {
-			target[0] = 1;
-		}
-		if(input.charAt(3) == 'c') {
-			target[0] = 2;
-		}
-		if(input.charAt(3) == 'd') {
-			target[0] = 3;
-		}
-		if(input.charAt(3) == 'e') {
-			target[0] = 4;
-		}
-		if(input.charAt(3) == 'f') {
-			target[0] = 5;
-		}
-		if(input.charAt(3) == 'g') {
-			target[0] = 6;
-		}
-		if(input.charAt(3) == 'h') {
-			target[0] = 7;
-		}
-		target[1] = (8 - Character.getNumericValue(input.charAt(4)));
-		move.add(target);
 		
 		return move;
 	}
 
-	//Turn Sequence Algorithm
-	//1. GameMaster parses move
-	//2. GameMaster checks if move is valid
-	//2.1 Does the piece belong to the active player?
-	//2.2 Is the target within the piece's movement range?
-	//2.3 Does making the move put the active player in check?
-	//3. 
-	// a.1 If the move is valid, the GameMaster sets all relevant flags
-	// a.2 GameMaster moves the piece
-	// b. Otherwise, the GameMaster requests a new move from the player
-	//4. GameMaster checks for check and checkmate
-	public Boolean takeTurn(String input) {
-		ArrayList<int[]> move = parseMove(input);
-		if(!validMove(move)) {
-			System.out.print("Invalid Move");
-			return false;
+	private int[] parseHelper(String input) {
+		int[] square = new int[2];
+		
+		square[0] = (8 - Character.getNumericValue(input.charAt(1)));	
+		if(input.charAt(0) == 'a') {
+			square[1] = 0;
+		}
+		if(input.charAt(0) == 'b') {
+			square[1] = 1;
+		}
+		if(input.charAt(0) == 'c') {
+			square[1] = 2;
+		}
+		if(input.charAt(0) == 'd') {
+			square[1] = 3;
+		}
+		if(input.charAt(0) == 'e') {
+			square[1] = 4;
+		}
+		if(input.charAt(0) == 'f') {
+			square[1] = 5;
+		}
+		if(input.charAt(0) == 'g') {
+			square[1] = 6;
+		}
+		if(input.charAt(0) == 'h') {
+			square[1] = 7;
 		}
 		
-		movePiece(this.mainBoard, move);
-		setFlags(move);
-		
-		return true;
-	}
-	
-	private Boolean validMove(ArrayList<int[]> move) {
-		int[] start = move.get(0);
-		int[] end = move.get(1);
-		
-		//Does the piece belong to the active player?
-		if(this.model.getWhiteToMove() != this.model.spaces[start[0]][start[1]].getOccupying().getIsWhite()) {
-			return false;
-		}
-		
-		//Is the move within the piece's moveset?
-		ArrayList<int[]> moveset = this.model.spaces[start[0]][start[1]].getOccupying().getMoveset(this.model);
-		for(int i = 0; i < moveset.size(); i++) {
-			if(end == moveset.get(i)) {
-				break;
-			}
-			if(i == (moveset.size()-1)) {
-				return false;
-			}
-		}
-		
-		//Does making the move put the active player in check or checkmate?
-		Piece piece = this.model.spaces[start[0]][start[1]].getOccupying();
-		Piece target = this.model.spaces[end[0]][end[1]].getOccupying();
-		
-		this.model.spaces[start[0]][start[1]].setOccupying(null);
-		this.model.spaces[end[0]][end[1]].setOccupying(piece);
-		
-		
-		if(inCheck(this.model, piece.getIsWhite()) || inCheckmate(this.model, piece.getIsWhite())) {
-			this.model.spaces[start[0]][start[1]].setOccupying(piece);
-			this.model.spaces[end[0]][end[1]].setOccupying(target);
-			return false;
-		}
-		
-		return true;
-	}
-
-	private void setFlags(ArrayList<int[]> move) {
-		int[] start = move.get(0);
-		int[] end = move.get(1);
-		Piece piece = this.model.spaces[start[0]][start[1]].getOccupying();
-		
-		//Set current turn
-		if(piece.getIsWhite()) {
-			model.setWhiteToMove(false);
-			mainBoard.setWhiteToMove(false);
-		} else {
-			model.setWhiteToMove(true);
-			mainBoard.setWhiteToMove(true);
-		}
-		
-		//Piece Flags
-		//Has Moved
-		this.model.setEnPassant(false);
-		this.mainBoard.setEnPassant(false);
-		
-		if(Character.toLowerCase(this.model.spaces[start[0]][start[1]].getOccupying().getName()) == 'k') {
-			((King) this.model.spaces[start[0]][start[1]].getOccupying()).setHasMoved(true);
-			if(piece.getIsWhite()) {
-				this.model.setWhiteCanCastle(false);
-				this.mainBoard.setWhiteCanCastle(false);
-			} else {
-				this.model.setBlackCanCastle(false);
-				this.mainBoard.setBlackCanCastle(false);
-			}
-			
-		} else if (Character.toLowerCase(this.model.spaces[start[0]][start[1]].getOccupying().getName()) == 'p') {
-			((Pawn) this.model.spaces[start[0]][start[1]].getOccupying()).setHasMoved(true);
-			if(start[0]+2 == end[0]) {
-				this.model.setEnPassant(true);
-				this.mainBoard.setEnPassant(true);
-			}
-			
-		} else if(Character.toLowerCase(this.model.spaces[start[0]][start[1]].getOccupying().getName()) == 'r') {
-			((Rook) this.model.spaces[start[0]][start[1]].getOccupying()).setHasMoved(true);
-		}
-		
-	}
-	
-	private void movePiece(Board board, ArrayList<int[]> move) {
-		int[] start = move.get(0);
-		int[] end = move.get(1);
-		Piece piece;
-		
-		piece = board.spaces[start[0]][start[0]].getOccupying();
-		board.spaces[start[0]][start[0]].setOccupying(null);
-		piece.setLocation(end);
-		board.spaces[end[0]][end[1]].setOccupying(piece);
+		return square;
 	}
 	
 	private void castle(Board board, ArrayList<int[]> move) {
@@ -311,4 +187,90 @@ public class GameMaster {
 		return checkmate;
 	}
 
+	public void debug(String input) {
+		String[] spaces = input.split(" ");
+		Board board = mainBoard;
+		if(input.contains("main")) {
+			board = mainBoard;
+		} else if(input.contains("model")) {
+			board = model;
+		} else if(input.contains("test")) {
+			board = test;
+		}
+		
+		for(int i = 0; i < spaces.length; i++) {
+			if(spaces[i].equals("dbs")) {
+				dbGetSpace(board, parseHelper(spaces[i+1]));
+			} else if(spaces[i].equals("dbm")) {
+				dbGetMoves(board, parseHelper(spaces[i+1]));
+			} else if(spaces[i].equals("dbp")) {
+				dbPrintBoard(board);
+			} else if (spaces[i].equals("dbsp")) {
+				dbSpawnPiece(parseHelper(spaces[i+1]), spaces[i+2].charAt(0));
+			}
+		}
+	}
+	
+	private void dbSpawnPiece(int[] space, char piece) {
+		Boolean isWhite = Character.isUpperCase(piece);
+		Piece addToBoard = null;
+		if(Character.toLowerCase(piece) == 'p') {
+			addToBoard = new Pawn(isWhite);
+		}
+		if(Character.toLowerCase(piece) == 'r') {
+			addToBoard = new Rook(isWhite);
+		}
+		if(Character.toLowerCase(piece) == 'n') {
+			addToBoard = new Knight(isWhite);
+		}
+		if(Character.toLowerCase(piece) == 'b') {
+			addToBoard = new Bishop(isWhite);
+		}
+		if(Character.toLowerCase(piece) == 'k') {
+			addToBoard = new King(isWhite);
+		}
+		if(Character.toLowerCase(piece) == 'q') {
+			addToBoard = new Queen(isWhite);
+		}
+		test.spaces[space[0]][space[1]].setOccupying(addToBoard);
+	}
+	
+	private void dbGetSpace(Board board, int[] space) {
+		System.out.println("Requested Coordinate: " + space[0] + "," + space[1]);
+		board.spaces[space[0]][space[1]].display();
+		if(board.spaces[space[0]][space[1]].getOccupying() != null) {
+			System.out.println("Is White: " + board.spaces[space[0]][space[1]].getOccupying().getIsWhite());
+			System.out.println("Name: " + board.spaces[space[0]][space[1]].getOccupying().getName());
+			System.out.println("Space Coordinate: " + board.spaces[space[0]][space[1]].getLocation()[0]
+								+ "," + board.spaces[space[0]][space[1]].getLocation()[1]);
+			System.out.println("Piece Coordinate: " + board.spaces[space[0]][space[1]].getOccupying().getLocation()[0]
+								+ "," + board.spaces[space[0]][space[1]].getOccupying().getLocation()[1]);
+			if(board.spaces[space[0]][space[1]].getOccupying().getName() == 'k'||
+			   board.spaces[space[0]][space[1]].getOccupying().getName() == 'K') {
+				System.out.println("Has Moved: " + ((King) board.spaces[space[0]][space[1]].getOccupying()).getHasMoved());
+			}
+			if(board.spaces[space[0]][space[1]].getOccupying().getName() == 'r'||
+			   board.spaces[space[0]][space[1]].getOccupying().getName() == 'R') {
+				System.out.println("Has Moved: " + ((Rook) board.spaces[space[0]][space[1]].getOccupying()).getHasMoved());
+			}
+			if(board.spaces[space[0]][space[1]].getOccupying().getName() == 'p'||
+			   board.spaces[space[0]][space[1]].getOccupying().getName() == 'P') {
+				System.out.println("Has Moved: " + ((Pawn) board.spaces[space[0]][space[1]].getOccupying()).getHasMoved());
+			}
+		}
+		System.out.println();
+	}
+	
+	private void dbGetMoves(Board board, int[] space) {
+		ArrayList<int[]> moves = board.spaces[space[0]][space[1]].getOccupying().getMoveset(board);
+		for(int i = 0; i < moves.size(); i++) {
+			System.out.println(moves.get(i)[0] + "," + moves.get(i)[1]);
+		}
+	}
+	
+	private void dbPrintBoard(Board board) {
+		board.displayBoard();
+	}
+
+	
 }

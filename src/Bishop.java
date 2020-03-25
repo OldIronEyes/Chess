@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class Bishop extends Piece{
 
-	public Bishop(Boolean IsWhite, int[] Location) {
+	public Bishop(Boolean IsWhite) {
 		this.setIsWhite(IsWhite);
-		this.setLocation(Location);
 		this.setName('b');
 	}
 

@@ -13,9 +13,8 @@ public class Pawn extends Piece{
 		this.hasMoved = HasMoved;
 	}
 	
-	public Pawn(Boolean IsWhite, int[] Location) {
+	public Pawn(Boolean IsWhite) {
 		this.setIsWhite(IsWhite);
-		this.setLocation(Location);
 		this.setName('p');
 		this.hasMoved = false;
 	}

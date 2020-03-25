@@ -3,7 +3,7 @@
 import java.util.ArrayList;
 
 public class King extends Piece {
-	Boolean hasMoved;
+	private Boolean hasMoved;
 
 	public Boolean getHasMoved() {
 		return this.hasMoved;
@@ -13,9 +13,8 @@ public class King extends Piece {
 		this.hasMoved = HasMoved;
 	}
 
-	public King(Boolean IsWhite, int[] Location) {
+	public King(Boolean IsWhite) {
 		this.setIsWhite(IsWhite);
-		this.setLocation(Location);
 		this.setName('K');
 		this.hasMoved = false;
 	}
@@ -73,6 +72,7 @@ public class King extends Piece {
 			}
 		}
 		
+		//
 		if((this.getIsWhite() && board.getWhiteCanCastle()) || (!this.getIsWhite() && board.getBlackCanCastle())) {
 			this.castle(board, moveset);
 		}

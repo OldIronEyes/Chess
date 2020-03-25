@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class Knight extends Piece{
 
-	public Knight(Boolean IsWhite, int[] Location) {
+	public Knight(Boolean IsWhite) {
 		this.setIsWhite(IsWhite);
-		this.setLocation(Location);
 		this.setName('N');
 	}
 

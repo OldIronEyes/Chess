@@ -13,10 +13,10 @@ public class Rook extends Piece {
 		this.hasMoved = HasMoved;
 	}
 
-	public Rook(Boolean IsWhite, int[] Location) {
+	public Rook(Boolean IsWhite) {
 		this.setIsWhite(IsWhite);
-		this.setLocation(Location);
 		this.setName('R');
+		this.hasMoved = false;
 	}
 
 	public ArrayList<int[]> getMoveset(Board board) {

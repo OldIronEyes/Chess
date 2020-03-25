@@ -9,6 +9,7 @@ public class Space {
 		this.occupying = Occupying;
 		this.location = Location;
 		this.color = Color;
+		this.occupying.setLocation(this.location);
 	}
 	
 	public void display() {
@@ -47,6 +48,7 @@ public class Space {
 	
 	public void setOccupying(Piece newOccupying) {
 		this.occupying = newOccupying;
+		this.occupying.setLocation(this.location);
 	}
 
 	public void setColor(char Color) {
