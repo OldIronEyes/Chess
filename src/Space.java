@@ -9,7 +9,9 @@ public class Space {
 		this.occupying = Occupying;
 		this.location = Location;
 		this.color = Color;
-		this.occupying.setLocation(this.location);
+		if(this.occupying != null) {
+			this.occupying.setLocation(this.location);
+		}
 	}
 	
 	public void display() {
