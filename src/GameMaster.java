@@ -238,6 +238,7 @@ public class GameMaster {
 	private void dbGetSpace(Board board, int[] space) {
 		System.out.println("Requested Coordinate: " + space[0] + "," + space[1]);
 		board.spaces[space[0]][space[1]].display();
+		System.out.println();
 		if(board.spaces[space[0]][space[1]].getOccupying() != null) {
 			System.out.println("Is White: " + board.spaces[space[0]][space[1]].getOccupying().getIsWhite());
 			System.out.println("Name: " + board.spaces[space[0]][space[1]].getOccupying().getName());

@@ -69,9 +69,9 @@ public class Board {
 
 	public Board() {
 		this.spaces = new Space[8][8];
-		int[] location = new int[2];
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++) {
+				int[] location = new int[2];
 				location[0] = i;
 				location[1] = j;
 				if((i+j) % 2 == 0) {
